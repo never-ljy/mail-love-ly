@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC
+    "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.gzt.mapper.LoveMapper">
+    <insert id="batchInsert">
+        insert into t_love_msg (msg) values
+        <foreach collection="list" item="msg" separator=",">
+            (#{msg})
+        </foreach>
+    </insert>
+
+   <!-- <select id="getMessage" resultType="com.gzt.model.Msg">
+    select * from t_love_msg
+    </select>-->
+    <select id="getLastOne" resultType="com.gzt.model.Msg">
+        select * from t_love_msg where id = (select max(id) from t_love_msg)
+    </select>
+    <select id="getFirstOne" resultType="com.gzt.model.Msg">
+        select * from t_love_msg where id = (select min(id) from t_love_msg)
+    </select>
+    <delete id="delMsg" parameterType="int">
+        delete from t_love_msg where id = #{id}
+    </delete>
+</mapper>
