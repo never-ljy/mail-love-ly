@@ -140,7 +140,7 @@ public class MailUtil {
         // 获取系统属性
         Properties properties = System.getProperties();
         // 设置邮件服务器
-        properties.setProperty("mail.smtp.host", Const.email.MAIL_HOST_QQ);
+        properties.setProperty("mail.smtp.host", Const.email.MAIL_HOST);
 
         properties.put("mail.smtp.auth", "true");
         MailSSLSocketFactory sf = null;
@@ -153,7 +153,7 @@ public class MailUtil {
             // 获取默认session对象
             Session session = Session.getDefaultInstance(properties, new Authenticator() {
                 public PasswordAuthentication getPasswordAuthentication() {     //qq邮箱服务器账户、第三方登录授权码
-                    return new PasswordAuthentication(Const.email.MAIL_FROM_QQ, Const.email.MAIL_PASSWORD_QQ); //发件人邮件用户名、密码
+                    return new PasswordAuthentication(Const.email.MAIL_FROM_RUI, Const.email.MAIL_PASSWORD_RUI); //发件人邮件用户名、密码
                 }
             });
 
@@ -162,7 +162,7 @@ public class MailUtil {
             MimeMessage message = new MimeMessage(session);
 
             // Set From: 头部头字段
-            message.setFrom(new InternetAddress(Const.email.MAIL_FROM_QQ));
+            message.setFrom(new InternetAddress(Const.email.MAIL_FROM_RUI));
 
             // Set To: 头部头字段
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
