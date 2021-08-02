@@ -80,7 +80,7 @@ public class MailUtil {
             properties.put("mail.smtp.ssl.enable", "true");
             properties.put("mail.smtp.ssl.socketFactory", sf);
             // 获取默认session对象
-            Session session = Session.getDefaultInstance(properties, new Authenticator() {
+            Session session = Session.getInstance(properties, new Authenticator() {
                 public PasswordAuthentication getPasswordAuthentication() {     //qq邮箱服务器账户、第三方登录授权码
                     return new PasswordAuthentication(Const.email.MAIL_FROM, Const.email.MAIL_PASSWORD); //发件人邮件用户名、密码
                 }
@@ -151,7 +151,7 @@ public class MailUtil {
             properties.put("mail.smtp.ssl.enable", "true");
             properties.put("mail.smtp.ssl.socketFactory", sf);
             // 获取默认session对象
-            Session session = Session.getDefaultInstance(properties, new Authenticator() {
+            Session session = Session.getInstance(properties, new Authenticator() {
                 public PasswordAuthentication getPasswordAuthentication() {     //qq邮箱服务器账户、第三方登录授权码
                     return new PasswordAuthentication(Const.email.MAIL_FROM_RUI, Const.email.MAIL_PASSWORD_RUI); //发件人邮件用户名、密码
                 }
