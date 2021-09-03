@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 import java.io.File;
-
 @Component
 public class MyScheduled {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
@@ -92,7 +91,10 @@ public class MyScheduled {
             //String newFileName2XiXi = redisServiceImpl.getValue("newFileName2XiXi").toString();
             String distName="/opt/picXi/";
             //String distName="D:\\upload";
-            String fileName = distName + "love.jpg";
+            File file = new File(distName);
+            String[] list = file.list();
+            String fileName = distName + list[0];
+            //String fileName = distName + "love.jpg";
             //String fileName = distName + "\\a.jpg";
             logger.info("fileName为：------------"+fileName);
             logger.info("第1次尝试发送附件邮件");
@@ -105,7 +107,6 @@ public class MyScheduled {
         }
 
     }
-
     /**、
      * 把oss的照片发到opt文件夹里
      * zr___xixi
@@ -121,11 +122,13 @@ public class MyScheduled {
                 fileRemoveAll.remove(file);
             }
             String newFileName2XiXi = redisServiceImpl.getValue("newFileName2XiXi").toString();
+
             logger.info("上传到阿里云的文件名为："+newFileName2XiXi);
-            DownloadImage.download("https://1908a.oss-cn-beijing.aliyuncs.com/"+newFileName2XiXi, newFileName2XiXi,"/opt/picXi/");
+            DownloadImage.download(newFileName2XiXi, newFileName2XiXi.substring(newFileName2XiXi.lastIndexOf("/")+1),"/opt/picXi/");
             logger.info("将oss图片下载到服务器success");
         }catch (Exception e){
             logger.info("将oss图片下载到服务器失败");
+            logger.info(e.getMessage());
         }
 
     }
@@ -134,7 +137,7 @@ public class MyScheduled {
      * 把oss的照片发到opt文件夹里
      * ljy
      */
-    @Scheduled(cron ="0 30 17 * * *")
+    @Scheduled(cron ="0 30 21 * * *")
     public void resetPic2xixi() {
         try {
             String distName="/opt/pic/";
@@ -146,64 +149,13 @@ public class MyScheduled {
             }
             String newFileName = redisServiceImpl.getValue("newFileName").toString();
             logger.info("上传到阿里云的文件名为："+newFileName);
-            DownloadImage.download("https://1908a.oss-cn-beijing.aliyuncs.com/"+newFileName, newFileName,"/opt/pic/");
+            //https://1908a.oss-cn-beijing.aliyuncs.com/pic2ruirui/163030703759246.png
+            DownloadImage.download(newFileName, newFileName.substring(newFileName.lastIndexOf("/")+1),"/opt/pic/");
             logger.info("将oss图片下载到服务器success");
         }catch (Exception e){
             logger.info("将oss图片下载到服务器失败");
+            logger.info(e.getMessage());
         }
-
     }
-
-    /*@Scheduled(cron ="0 0 14 * * *")
-    public void resetPicLocal() {
-        try {
-            String distName="D:\\upload";
-            File file = new File(distName);
-            FileRemoveAll fileRemoveAll = new FileRemoveAll();
-            if (file.listFiles().length != 0){
-                logger.info("将/opt/pic文件夹清空");
-                fileRemoveAll.remove(file);
-            }
-            String newFileName = redisServiceImpl.getValue("newFileName").toString();
-            logger.info("上传到阿里云的文件名为："+newFileName);
-            DownloadImage.download("https://1908a.oss-cn-beijing.aliyuncs.com/"+newFileName, newFileName,"D:\\upload");
-            logger.info("将oss图片下载到服务器success");
-        }catch (Exception e){
-            logger.info("将oss图片下载到服务器失败");
-        }
-
-    }*/
-
-    /*@Scheduled(cron ="0 30 10 * * *")
-    public void test(){
-        //String message = sendMessage.getOneS();
-        String s = loveMapper.getLastOne();
-        boolean flag = false;
-
-        String distName="/opt/pic/";
-        File file = new File(distName);
-        String[] list = file.list();
-
-        String fileName = distName + list[0];
-        logger.info("fileName为：------------"+fileName);
-        logger.info("第1次尝试发送附件邮件");
-        flag = MailUtil.sendMailWithAttachment(s,"1249094460@qq.com",fileName);
-        //"1249094460@qq.com", "来自西西的消息！❤", "s", "C:\\Users\\Admin\\Desktop\\a.mp4"
-        //flag = MailUtil.sendMailWithAttachment(s,"1249094460@qq.com","C:\\Users\\Admin\\Desktop\\a.mp4");
-        logger.info("第1次发送附件邮件成功");
-        if (flag) {
-            loveMapper.delMsg(s);
-        }else{
-            try{
-                MailUtil.sendMailWithAttachment(s,"1249094460@qq.com","/opt/pic/love.jpg");
-                //mailService.sendAttachmentsMail(sheMail, "来自西西的消息！❤", s, "/opt/pic/love.jpg");
-            } catch (Exception e){
-                MailUtil.sendMail("来自西西的消息！❤", s ,"1249094460@qq.com");
-                //mailService.sendSimpleMail(sheMail, "来自西西的消息！❤", s);
-            }
-
-        }
-    }*/
-
 
 }

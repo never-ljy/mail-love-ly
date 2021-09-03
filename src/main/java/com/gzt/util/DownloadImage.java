@@ -18,7 +18,7 @@ public class DownloadImage {
      */  
     public static void main(String[] args) throws Exception {  
         // TODO Auto-generated method stub  
-         download("https://1908a.oss-cn-beijing.aliyuncs.com/a.jpg", "a.jpg","d:\\image\\");
+         download("https://1908a.oss-cn-beijing.aliyuncs.com/pic2xixi/1630480874434109.jpg", "https://1908a.oss-cn-beijing.aliyuncs.com/pic2xixi/1630480874434109.jpg","d:\\image\\");
     }  
       
     public static void download(String urlString, String filename,String savePath) throws Exception {

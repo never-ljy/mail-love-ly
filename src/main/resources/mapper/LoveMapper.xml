@@ -20,6 +20,9 @@
     <select id="getFirstOne" resultType="com.gzt.model.Msg">
         select * from t_love_msg where id = (select min(id) from t_love_msg)
     </select>
+    <select id="queryList" resultType="com.gzt.model.Msg">
+        select * from t_love_msg
+    </select>
     <delete id="delMsg" parameterType="int">
         delete from t_love_msg where id = #{id}
     </delete>
